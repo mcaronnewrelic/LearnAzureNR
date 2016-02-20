@@ -317,13 +317,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Examples\Create.cshtml" />
-    <Content Include="Views\Examples\Delete.cshtml" />
     <Content Include="Views\Examples\Details.cshtml" />
     <Content Include="Views\Examples\Edit.cshtml" />
     <Content Include="Views\Examples\Index.cshtml" />
+    <Content Include="Views\Examples\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

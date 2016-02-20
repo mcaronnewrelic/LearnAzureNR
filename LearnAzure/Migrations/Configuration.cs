@@ -13,6 +13,7 @@ namespace LearnAzure.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(LearnAzure.Models.ApplicationDbContext context)
