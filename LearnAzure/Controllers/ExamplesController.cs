@@ -52,6 +52,10 @@ namespace LearnAzure.Models
                 db.Examples.Add(example);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                
+                //Add Insights Event
+                var eventAttributes = new Dictionary<String, Object>();
+                NewRelic.Api.Agent.NewRelic.RecordCustomEvent("ExampleCreate", eventAttributes);
             }
 
             return View(example);
