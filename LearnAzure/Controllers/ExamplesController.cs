@@ -45,17 +45,19 @@ namespace LearnAzure.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ExampleId,Name,Description,Output,Template")] Example example)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Output,Template")] Example example)
         {
             if (ModelState.IsValid)
             {
                 db.Examples.Add(example);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-                
+
                 //Add Insights Event
                 var eventAttributes = new Dictionary<String, Object>();
                 NewRelic.Api.Agent.NewRelic.RecordCustomEvent("ExampleCreate", eventAttributes);
+
+                return RedirectToAction("Index");
+                
             }
 
             return View(example);
@@ -68,6 +70,7 @@ namespace LearnAzure.Models
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Example example = db.Examples.Find(id);
             if (example == null)
             {
@@ -81,12 +84,15 @@ namespace LearnAzure.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ExampleId,Name,Description,Output,Template")] Example example)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Output,Template")] Example example)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(example).State = EntityState.Modified;
                 db.SaveChanges();
+                var eventAttributes = new Dictionary<String, Object>() { { "ID", example.Id }, { "Action", "edit" } };
+                NewRelic.Api.Agent.NewRelic.RecordCustomEvent("Example", eventAttributes);
+
                 return RedirectToAction("Index");
             }
             return View(example);
@@ -115,6 +121,9 @@ namespace LearnAzure.Models
             Example example = db.Examples.Find(id);
             db.Examples.Remove(example);
             db.SaveChanges();
+            var eventAttributes = new Dictionary<String, Object>() { { "ID", example.Id }, { "Action", "delete" } };
+            NewRelic.Api.Agent.NewRelic.RecordCustomEvent("Example", eventAttributes);
+
             return RedirectToAction("Index");
         }
 
